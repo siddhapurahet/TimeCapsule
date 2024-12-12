@@ -34,6 +34,8 @@ const Auth = () => {
       const token = res?.tokenId;
 
       try {
+        // console.log(result);
+        console.log(res);
         dispatch({type: 'AUTH', data: {result, token}});
       } catch(error) {
         console.log(error);
