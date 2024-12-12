@@ -80,7 +80,7 @@ const Auth = () => {
                 disabled={renderProps.disabled} 
                 startIcon={<Icon />}  
                 variant="contained">
-                  Google Sign In
+                  Google Sign In...
                 </Button>
             )}
             onSuccess={googleSuccess}
