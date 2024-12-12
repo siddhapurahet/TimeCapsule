@@ -6,6 +6,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Input from './Input';
 import Icon from './Icon';
 import { useDispatch } from 'react-redux';
+import GoogleAuthLogin from './GoogleAuth';
 
 const Auth = () => {
     const classes = useStyles();
@@ -71,8 +72,9 @@ const Auth = () => {
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             {isSignUp ? "Sign Up" : "Sign In"}
           </Button>
-          <GoogleLogin 
-            clientId='323652751604-1hdqf21b2ucse4b70ob08dfs5mfs3f5t.apps.googleusercontent.com'
+          <GoogleAuthLogin />
+          {/* <GoogleLogin 
+            clientId='CLIENT_ID'
             render={(renderProps) => (
               <Button 
                 className={classes.googleButton} 
@@ -88,7 +90,7 @@ const Auth = () => {
             onSuccess={googleSuccess}
             onFailure={googleFailure}
             cookiePolicy='single_host_origin'
-          />
+          /> */}
           <Grid item>
             <Button onClick={switchMode}>
               {isSignUp ? 'Already have an account? Sign In' : 'Dont have an account? Sign Up'}
