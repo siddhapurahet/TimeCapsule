@@ -7,6 +7,7 @@ import Input from './Input';
 import Icon from './Icon';
 import { useDispatch } from 'react-redux';
 
+
 const Auth = () => {
     const classes = useStyles();
     const [isSignUp, setIsSignUp] = useState(false);
@@ -70,7 +71,7 @@ const Auth = () => {
             {isSignUp ? "Sign Up" : "Sign In"}
           </Button>
           <GoogleLogin 
-            clientId='323652751604-1hdqf21b2ucse4b70ob08dfs5mfs3f5t.apps.googleusercontent.com'
+            clientId='client_id'
             render={(renderProps) => (
               <Button 
                 className={classes.googleButton} 
