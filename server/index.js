@@ -8,14 +8,19 @@ import dotenv from 'dotenv';
 const app =express();
 dotenv.config();
 
-app.use(bodyParser.json({ limit: "30mb", extended: true}));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
-app.use(cors());
-
 app.use((req, res, next) => {
-  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+  res.setHeader('Cross-Origin-Opener-Policy','same-origin');
   next();
 });
+app.use(bodyParser.json({ limit: "30mb", extended: true}));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
+app.use(cors({
+  origin: '*', // Or specify allowed origins
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+
 
 app.use('/posts', postRoutes);
 app.get('/', (req, res) => {
