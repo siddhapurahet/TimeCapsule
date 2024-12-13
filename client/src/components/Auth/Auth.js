@@ -59,7 +59,7 @@ const Auth = () => {
           <Grid container spacing={2}>
             {
               isSignUp && (
-                <>
+                <> 
                   <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half/>
                   <Input name="firstName" label="First Name" handleChange={handleChange} half />
                 </>

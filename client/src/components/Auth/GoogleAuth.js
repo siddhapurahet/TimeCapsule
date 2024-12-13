@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
-// import dotenv from 'dotenv';
-
-// dotenv.config();
+import { useDispatch } from 'react-redux';
+import { AUTH } from '../../constants/actionTypes';
+import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const GoogleAuthLogin = () => {
+
   useEffect(() => {
     // Ensure the script is loaded and the GoogleAuth object is initialized
     window.google.accounts.id.initialize({
@@ -21,9 +23,12 @@ const GoogleAuthLogin = () => {
     );
   }, []);
 
+  const dispatch = useDispatch();
+  const Navigate = useNavigate();
+
   const handleLoginResponse = (response) => {
   try {
-    console.log('Google login success', response);
+    console.log('Google login success from handle func', response);
 
     // Extract the ID token from the response
     const idToken = response.credential;
@@ -32,7 +37,17 @@ const GoogleAuthLogin = () => {
       throw new Error('No ID token received from Google');
     }
 
-    console.log('ID Token:', idToken);
+    // Decoding the ID token to extract user info
+    const decodedToken = jwtDecode(idToken);
+    // console.log('Decoded Token:', decodedToken);
+
+    // Extracting the user info from the decoded token
+    const { email, given_name, family_name, sub } = decodedToken;
+
+
+    dispatch({type: AUTH, data: { email, givenName: given_name, familyName: family_name, userId: sub, idToken }});
+    Navigate('/');
+    // console.log('ID Token from handle func:', decodedToken);
 
     // Send the ID token to your backend server for verification and processing
     // Example: await sendIdTokenToBackend(idToken); // Uncomment if using an async function for backend call
