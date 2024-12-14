@@ -4,6 +4,7 @@ import user from '../models/user.js';
 
 export const signin = async(req, res) => {
     const { email, password } = req.body;
+    
     try {
         const existingUser = await user.findOne({email});
         if(!existingUser) {
@@ -16,7 +17,7 @@ export const signin = async(req, res) => {
         }
 
         const token = jwt.sign({email: existingUser.email, id: existingUser._id}, process.env.SECRET_KEY, {expiresIn: '1h'});
-        
+
         res.status(200).json({result: existingUser, token});
 
     } catch (error) {
@@ -24,8 +25,8 @@ export const signin = async(req, res) => {
     }
 }
 
-export const signup = async() => {
-    const { email, password, confirmPassword, firstName, lastName} = req.body();
+export const signup = async(req, res) => {
+    const { email, password, confirmPassword, firstName, lastName} = req.body;
 
     try {
         const existingUser = await user.findOne({email});

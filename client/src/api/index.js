@@ -1,7 +1,13 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://timecapsule-server.onrender.com' })
+const API = axios.create({ baseURL: 'http://localhost:10000'})
+// const API = axios.create({ baseURL: 'https://timecapsule-server.onrender.com' })
 // const url = 'https://timecapsule-server.onrender.com/posts';
+
+// API.interceptors.request.use((req) => {
+//     console.log('Request:', req);
+//     return req;
+// });
 
 export const fetchPosts = () => API.get('/posts');
 export const createPost = (newPost) => API.post('/posts', newPost);

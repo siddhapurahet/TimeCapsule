@@ -28,6 +28,8 @@ const Auth = () => {
       // console.log(formData);
       if(isSignUp) {
         dispatch(signup(formData, Navigate));
+      } else {
+          dispatch(signin(formData, Navigate));
       }
     };
 
