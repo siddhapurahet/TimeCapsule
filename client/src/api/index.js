@@ -4,10 +4,12 @@ const API = axios.create({ baseURL: 'http://localhost:10000'})
 // const API = axios.create({ baseURL: 'https://timecapsule-server.onrender.com' })
 // const url = 'https://timecapsule-server.onrender.com/posts';
 
-// API.interceptors.request.use((req) => {
-//     console.log('Request:', req);
-//     return req;
-// });
+API.interceptors.request.use((req) => {
+    if(localStorage.getItem('profile')) {
+        req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
+    }
+    return req;
+});
 
 export const fetchPosts = () => API.get('/posts');
 export const createPost = (newPost) => API.post('/posts', newPost);

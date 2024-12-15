@@ -12,8 +12,8 @@ export const getPosts = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
-    const body = req.body;
-    const newPost = new postMessage(body);
+    const post = req.body;
+    const newPost = new postMessage({ ...post, creator: req.userId, createdAt: new Date().toISOString() });
     try {
         await newPost.save();
         res.status(200).json(newPost);
@@ -67,5 +67,5 @@ export const likePost = async(req, res) => {
     }
     const updatedPost = await postMessage.findByIdAndUpdate(id, post, {new: true});
 
-    res.json(updatedPost);
+    res.status(200).json(updatedPost);
 }
