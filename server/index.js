@@ -10,7 +10,7 @@ const app =express();
 dotenv.config();
 
 app.use((req, res, next) => {
-  res.setHeader('Cross-Origin-Opener-Policy','same-origin');
+  res.setHeader('Cross-Origin-Opener-Policy','same-origin-allow-popups');
   next();
 });
 app.use(bodyParser.json({ limit: "30mb", extended: true}));

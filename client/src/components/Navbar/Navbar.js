@@ -5,6 +5,7 @@ import timeCapsule from '../../images/timeCapsule.jpg';
 import {Link, useNavigate, useLocation} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { LOGOUT } from '../../constants/actionTypes';
+import { jwtDecode } from 'jwt-decode';
 // import authReducer from '../../reducers/auth';
 
 const Navbar = () => {
@@ -16,6 +17,13 @@ const Navbar = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile'))); // Start with null
 
     useEffect(() => {
+        const token = user?.token;
+        if(token) {
+            const decodeToken = jwtDecode(token);
+            if(decodeToken.exp * 1000 < new Date().getTime()) {
+                logOut();
+            }
+        }
         const profile = JSON.parse(localStorage.getItem('profile'));
         setUser(profile);
     }, [location]); // Runs once on component mount
