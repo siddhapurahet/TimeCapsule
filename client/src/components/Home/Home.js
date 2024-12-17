@@ -3,7 +3,8 @@ import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
 import { useDispatch } from 'react-redux';
 import { getPosts } from '../../actions/posts';
-import { Container, Grow, Grid } from "@material-ui/core";
+import { Container, Grow, Grid, Paper } from "@material-ui/core";
+import PaginationComponent from '../Pagination/Pagination';
 
 const Home = () => {
     const [currentId, setcurrentId] = useState(null);
@@ -23,6 +24,9 @@ const Home = () => {
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <Form currentId={currentId} setcurrentId={setcurrentId}/>
+                            <Paper elevation={6}>
+                                <PaginationComponent />
+                            </Paper>
                         </Grid>
                     </Grid>
                 </Container>
