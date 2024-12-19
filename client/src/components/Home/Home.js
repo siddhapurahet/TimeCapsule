@@ -15,7 +15,7 @@ function useQuery() {
 
 const Home = () => {
 
-    const [currentId, setcurrentId] = useState(null);
+    const [currentId, setcurrentId] = useState(0);
     const [search, setSearch] = useState('');
     const [tags, setTags] = useState([]);
     const dispatch = useDispatch();
@@ -25,13 +25,14 @@ const Home = () => {
     const searchQuery = query.get('searchQuery');
     const classes = useStyles();
 
-    useEffect(() => {
-        dispatch(getPosts());
-    }, [currentId, dispatch]);
+    // useEffect(() => {
+    //     dispatch(getPosts());
+    // }, [currentId, dispatch]);
 
     const searchPost = () => {
         if(search.trim() || tags) {
             dispatch(getPostsBySearch({search, tags: tags.join(',')}));
+            navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
         } else {
             navigate('/');
         }
@@ -76,9 +77,11 @@ const Home = () => {
                                 <Button onClick={searchPost} className={classes.searchButton} variant='contained' color="primary">Search</Button>
                             </AppBar>
                             <Form currentId={currentId} setcurrentId={setcurrentId}/>
-                            <Paper elevation={6}>
-                                <PaginationComponent />
-                            </Paper>
+                            {(!searchQuery && !tags.length) && (
+                                <Paper elevation={6} className={classes.pagination}>
+                                    <PaginationComponent page={page}/>
+                                </Paper>
+                            )}
                         </Grid>
                     </Grid>
                 </Container>
