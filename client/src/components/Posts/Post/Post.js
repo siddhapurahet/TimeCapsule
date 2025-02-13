@@ -1,12 +1,13 @@
 import React from "react";
 import useStyles from './styles';
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from "@material-ui/core";
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from "@material-ui/core";
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../actions/posts";
+import { useNavigate } from "react-router-dom";
 // import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 // import ThumbUpOffAltIcon from '@material-ui/icons/ThumbUpOffAlt';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
@@ -14,6 +15,7 @@ import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 const Post = ({post, setcurrentId}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('profile'));
     
     const Likes = () => {
@@ -29,8 +31,18 @@ const Post = ({post, setcurrentId}) => {
         return <><ThumbDownAltIcon fontSize="small" />&nbsp;Like</>;
   };
 
+  const openPost = () => {  
+    navigate(`/posts/${post._id}`);
+  }
+
     return (
         <Card className={classes.card} raised elevation={6}>
+            {/* <ButtonBase onClick={openPost}> */}
+            <div
+                className={classes.clickableArea} 
+                onClick={openPost}
+            >
+            
             <CardMedia className={classes.media} image={post.selectedFile} title={post.title}/>
             <div className={classes.overlay}>
                 <Typography variant="h6">{post.name}</Typography>
@@ -50,6 +62,8 @@ const Post = ({post, setcurrentId}) => {
             <CardContent>
                 <Typography color="textSecondary" variant="body2" component="p">{post.message}</Typography>
             </CardContent>
+            {/* </ButtonBase> */}
+            </div>
             <CardActions className={classes.cardActions}>
                 <Button size="small" color="primary" disabled={!user?.result} onClick={() => {dispatch(likePost(post._id))}}>
                     <Likes />
@@ -61,6 +75,7 @@ const Post = ({post, setcurrentId}) => {
                     </Button>
                 )}
             </CardActions>
+            
         </Card>
     )
 };

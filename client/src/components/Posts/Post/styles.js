@@ -49,4 +49,11 @@ export default makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
+  clickableArea: {
+        cursor: "pointer",
+        transition: "background-color 0.2s ease-in-out",
+        "&:hover": {
+            backgroundColor: "#6b6b6b",
+        },
+  },
 });
