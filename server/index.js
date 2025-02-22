@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json({ limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
 app.use(cors({
-  origin: '*', // Or specify allowed origins
+  origin: 'https://fascinating-taiyaki-9679e4.netlify.app', // Or specify allowed origins
   methods: ['GET', 'POST', 'OPTIONS', 'PATCH', 'DELETE'],
   allowedHeaders: ['Access-Control-Allow-Headers', 'Content-Type', 'Authorization']
 }));
