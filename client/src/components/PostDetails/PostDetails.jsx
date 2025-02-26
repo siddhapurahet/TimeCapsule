@@ -6,7 +6,7 @@ import {
   Divider,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import moment from "moment";
 import useStyles from "./styles";
 import { getPost, getPostsBySearch } from "../../actions/posts";
@@ -14,7 +14,7 @@ import { getPost, getPostsBySearch } from "../../actions/posts";
 const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const classes = useStyles();
   const { id } = useParams();
 
@@ -37,7 +37,7 @@ const PostDetails = () => {
   }
 
   const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
-  const openPost = (_id) => navigate(`/posts/${_id}`);
+  const openPost = (_id) => navigate.push(`/posts/${_id}`);
 
   return (
     <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>

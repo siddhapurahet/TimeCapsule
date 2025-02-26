@@ -7,7 +7,7 @@ import Input from './Input';
 import Icon from './Icon';
 import { useDispatch } from 'react-redux';
 import GoogleAuthLogin from './GoogleAuth';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { signin, signup } from '../../actions/auth';
 
 const initialState = {firstName: '', lastName: '', email: '', password: '', confirmPassword: ''}
@@ -18,7 +18,7 @@ const Auth = () => {
     const [showPassword, setShowPassword] = useState(false);
     const dispatch = useDispatch();
     const [formData, setFormData] = useState(initialState);
-    const Navigate = useNavigate();
+    const Navigate = useHistory();
     
     const handleShowPassword = () => {
       setShowPassword((prevPassword) => !prevPassword);

@@ -22,6 +22,7 @@ export const getPosts = async (req, res) => {
         
         // const postMessages = await postMessage.find();
         res.status(200).json({ data: posts, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
+        console.log('Posts:', posts, 'Total pages:', total, 'Current Page:', Number(page), 'Number of Pages:', Math.ceil(total / LIMIT));
 
     } catch (error) {
         res.status(404).json({message: error.message});

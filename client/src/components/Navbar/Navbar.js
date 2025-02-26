@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { AppBar, Avatar, Button, Typography, Toolbar } from '@material-ui/core';
 import useStyles from './styles';
 import timeCapsule from '../../images/timeCapsule.jpg';
-import {Link, useNavigate, useLocation} from 'react-router-dom';
+import {Link, useHistory, useLocation} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { LOGOUT } from '../../constants/actionTypes';
 import { jwtDecode } from 'jwt-decode';
@@ -11,7 +11,7 @@ import { jwtDecode } from 'jwt-decode';
 const Navbar = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const navigate = useHistory();
     const location = useLocation();
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile'))); // Start with null
@@ -34,7 +34,7 @@ const Navbar = () => {
 
     const logOut = () => {
         dispatch({type: LOGOUT});
-        navigate('/');
+        navigate.push('/');
         setUser(null);
     }
     

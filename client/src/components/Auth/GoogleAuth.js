@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AUTH } from '../../constants/actionTypes';
 import { jwtDecode } from 'jwt-decode';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const GoogleAuthLogin = () => {
 
@@ -24,7 +24,7 @@ const GoogleAuthLogin = () => {
   }, []);
 
   const dispatch = useDispatch();
-  const Navigate = useNavigate();
+  const Navigate = useHistory();
 
   const handleLoginResponse = (response) => {
   try {
@@ -46,7 +46,7 @@ const GoogleAuthLogin = () => {
 
 
     dispatch({type: AUTH, data: { email, givenName: given_name, familyName: family_name, userId: sub, idToken }});
-    Navigate('/');
+    Navigate.push('/');
     // console.log('ID Token from handle func:', decodedToken);
 
     // Send the ID token to your backend server for verification and processing

@@ -7,7 +7,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../actions/posts";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 // import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 // import ThumbUpOffAltIcon from '@material-ui/icons/ThumbUpOffAlt';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
@@ -15,7 +15,7 @@ import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 const Post = ({post, setcurrentId}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const navigate = useHistory();
     const user = JSON.parse(localStorage.getItem('profile'));
     
     const Likes = () => {
@@ -32,7 +32,7 @@ const Post = ({post, setcurrentId}) => {
   };
 
   const openPost = () => {  
-    navigate(`/posts/${post._id}`);
+    navigate.push(`/posts/${post._id}`);
   }
 
     return (
