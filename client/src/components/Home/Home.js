@@ -3,10 +3,11 @@ import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
 import { useDispatch } from 'react-redux';
 import { getPosts, getPostsBySearch } from '../../actions/posts';
-import { Container, Grow, Grid, Paper, AppBar, TextField, Button } from "@material-ui/core";
+import { Container, Grow, Grid, Paper, AppBar, TextField, Button } from "@mui/material";
 import PaginationComponent from '../Pagination/Pagination';
 import { useHistory, useLocation } from 'react-router-dom';
-import ChipInput from 'material-ui-chip-input';
+// import ChipInput from 'mui-chips-input';
+import { MuiChipsInput } from "mui-chips-input";
 import useStyles from './styles';
 
 function useQuery() {
@@ -66,7 +67,7 @@ const Home = () => {
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                 />
-                                <ChipInput 
+                                <MuiChipsInput 
                                     style={{margin: '10px 0'}}
                                     value={tags}
                                     onAdd={handleAdd}

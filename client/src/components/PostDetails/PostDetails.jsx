@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Paper,
-  Typography,
-  CircularProgress,
-  Divider,
-} from "@material-ui/core";
+import { Paper, Typography, CircularProgress, Divider } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import moment from "moment";

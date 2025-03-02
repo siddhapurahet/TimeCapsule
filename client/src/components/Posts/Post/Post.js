@@ -1,16 +1,16 @@
 import React from "react";
 import useStyles from './styles';
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from "@material-ui/core";
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import DeleteIcon from '@material-ui/icons/Delete';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from "@mui/material";
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import DeleteIcon from '@mui/icons-material/Delete';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import moment from 'moment';
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../actions/posts";
 import { useHistory } from "react-router-dom";
 // import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-// import ThumbUpOffAltIcon from '@material-ui/icons/ThumbUpOffAlt';
-import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
+// import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 
 const Post = ({post, setcurrentId}) => {
     const classes = useStyles();

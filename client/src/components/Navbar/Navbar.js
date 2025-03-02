@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { AppBar, Avatar, Button, Typography, Toolbar } from '@material-ui/core';
+import { AppBar, Avatar, Button, Typography, Toolbar } from '@mui/material';
 import useStyles from './styles';
 import timeCapsule from '../../images/timeCapsule.jpg';
 import {Link, useHistory, useLocation} from 'react-router-dom';
