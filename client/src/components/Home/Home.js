@@ -57,7 +57,7 @@ const Home = () => {
                             <Posts setcurrentId={setcurrentId}/>
                         </Grid2>
                         <Grid2 item xs={12} sm={6} md={3}>
-                            <AppBar className={classes.appBarSearch} position='static' color='inherit'>
+                            {/* <AppBar className={classes.appBarSearch} position='static' color='inherit'>
                                 <TextField 
                                     name='search' 
                                     variant='outlined'
@@ -76,7 +76,7 @@ const Home = () => {
                                     variant='outlined'
                                 />
                                 <Button onClick={searchPost} className={classes.searchButton} variant='contained' color="primary">Search</Button>
-                            </AppBar>
+                            </AppBar> */}
                             <Form currentId={currentId} setcurrentId={setcurrentId}/>
                             {(!searchQuery && !tags.length) && (
                                 <Paper elevation={6} className={classes.pagination}>
