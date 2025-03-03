@@ -3,7 +3,7 @@ import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
 import { useDispatch } from 'react-redux';
 import { getPosts, getPostsBySearch } from '../../actions/posts';
-import { Container, Grow, Grid, Paper, AppBar, TextField, Button } from "@mui/material";
+import { Container, Grow, Paper, AppBar, TextField, Button, Grid2 } from "@mui/material";
 import PaginationComponent from '../Pagination/Pagination';
 import { useHistory, useLocation } from 'react-router-dom';
 // import ChipInput from 'mui-chips-input';
@@ -52,11 +52,11 @@ const Home = () => {
     return (
         <Grow in>
                 <Container maxWidth="xl">
-                    <Grid container justifyContent="space-between" alignItems="stretch" spacing={3} className={classes.gridContainer}>
-                        <Grid item xs={12} sm={6} md={9}>
+                    <Grid2 container justifyContent="space-between" alignItems="stretch" spacing={3} className={classes.gridContainer}>
+                        <Grid2 item xs={12} sm={6} md={9}>
                             <Posts setcurrentId={setcurrentId}/>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
+                        </Grid2>
+                        <Grid2 item xs={12} sm={6} md={3}>
                             <AppBar className={classes.appBarSearch} position='static' color='inherit'>
                                 <TextField 
                                     name='search' 
@@ -83,8 +83,8 @@ const Home = () => {
                                     <PaginationComponent page={page}/>
                                 </Paper>
                             )}
-                        </Grid>
-                    </Grid>
+                        </Grid2>
+                    </Grid2>
                 </Container>
             </Grow>
     )
