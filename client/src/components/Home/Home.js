@@ -3,7 +3,7 @@ import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
 import { useDispatch } from 'react-redux';
 import { getPosts, getPostsBySearch } from '../../actions/posts';
-import { Container, Grow, Paper, AppBar, TextField, Button, Grid2 } from "@mui/material";
+import { Container, Grow, Grid, Paper, AppBar, TextField, Button } from "@mui/material";
 import PaginationComponent from '../Pagination/Pagination';
 import { useHistory, useLocation } from 'react-router-dom';
 // import ChipInput from 'mui-chips-input';
