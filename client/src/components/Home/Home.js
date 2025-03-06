@@ -7,7 +7,7 @@ import { Container, Grow, Grid, Paper, AppBar, TextField, Button, Grid2 } from "
 import PaginationComponent from '../Pagination/Pagination';
 import { useHistory, useLocation } from 'react-router-dom';
 // import ChipInput from 'mui-chips-input';
-import { MuiChipsInput } from "mui-chips-input";
+// import { MuiChipsInput } from "mui-chips-input";
 import useStyles from './styles';
 
 function useQuery() {
