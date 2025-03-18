@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://localhost:10000' });
+const API = axios.create({ baseURL: 'https://timecapsule-server.onrender.com' });
 // const API = axios.create({ baseURL: 'https://timecapsule-server.onrender.com' })
 // const url = 'https://timecapsule-server.onrender.com/posts';
 
