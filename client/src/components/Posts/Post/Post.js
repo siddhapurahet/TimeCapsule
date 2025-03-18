@@ -8,9 +8,7 @@ import moment from 'moment';
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../actions/posts";
 import { useHistory } from "react-router-dom";
-// import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-// import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 
 const Post = ({post, setcurrentId}) => {
     const classes = useStyles();
@@ -24,11 +22,11 @@ const Post = ({post, setcurrentId}) => {
             ? (
             <><ThumbUpAltIcon fontSize="small" />&nbsp;{post.likes.length > 2 ? `You and ${post.likes.length - 1} others` : `${post.likes.length} like${post.likes.length > 1 ? 's' : ''}` }</>
             ) : (
-            <><ThumbDownAltIcon fontSize="small" />&nbsp;{post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}</>
+            <><ThumbUpOutlinedIcon fontSize="small" />&nbsp;{post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}</>
             );
         }
 
-        return <><ThumbDownAltIcon fontSize="small" />&nbsp;Like</>;
+        return <><ThumbUpOutlinedIcon fontSize="small" />&nbsp;Like</>;
   };
 
   const openPost = () => {  
