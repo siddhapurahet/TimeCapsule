@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json({ limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
 app.use(cors({
-  origin: 'https://timecapsule-client.onrender.com', // Or specify allowed origins
+  origin: ['https://timecapsule-client.onrender.com', 'http://localhost:3000'], // Or specify allowed origins
   methods: ['GET', 'POST', 'OPTIONS', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
