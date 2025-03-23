@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
+import Aibot from '../AIBot/Aibot';
 import { useDispatch } from 'react-redux';
 import { getPosts, getPostsBySearch } from '../../actions/posts';
 import { Container, Grow, Grid, Paper, AppBar, TextField, Button, Grid2 } from "@mui/material";
@@ -15,7 +16,6 @@ function useQuery() {
 }
 
 const Home = () => {
-
     const [currentId, setcurrentId] = useState(0);
     const [search, setSearch] = useState('');
     const [tags, setTags] = useState([]);
@@ -51,42 +51,45 @@ const Home = () => {
 
     return (
         <Grow in>
-                <Container maxWidth="xl">
-                    <Grid2 container justifyContent="space-between" alignItems="stretch" spacing={3} className={classes.gridContainer}>
-                        <Grid2 item xs={12} sm={6} md={9}>
-                            <Posts setcurrentId={setcurrentId}/>
-                        </Grid2>
-                        <Grid2 item xs={12} sm={6} md={3}>
-                            {/* <AppBar className={classes.appBarSearch} position='static' color='inherit'>
-                                <TextField 
-                                    name='search' 
-                                    variant='outlined'
-                                    label='Search your TimeCapsule'
-                                    onKeyUp={handleKeyUp}
-                                    fullWidth
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                />
-                                <MuiChipsInput 
-                                    style={{margin: '10px 0'}}
-                                    value={tags}
-                                    onAdd={handleAdd}
-                                    onDelete={handleDelete}
-                                    label='Search Tags'
-                                    variant='outlined'
-                                />
-                                <Button onClick={searchPost} className={classes.searchButton} variant='contained' color="primary">Search</Button>
-                            </AppBar> */}
-                            <Form currentId={currentId} setcurrentId={setcurrentId}/>
-                            {(!searchQuery && !tags.length) && (
-                                <Paper elevation={6} className={classes.pagination}>
-                                    <PaginationComponent page={page}/>
-                                </Paper>
-                            )}
-                        </Grid2>
+            <Container maxWidth="xl">
+                <Aibot />
+                <Grid2 container justifyContent="space-between" alignItems="stretch" spacing={3} className={classes.gridContainer}>
+                    <Grid2 item xs={12} sm={6} md={9}>
+                        <Posts setcurrentId={setcurrentId}/>
                     </Grid2>
-                </Container>
-            </Grow>
+                    <Grid2 item xs={12} sm={6} md={3}>
+
+                        {/* <AppBar className={classes.appBarSearch} position='static' color='inherit'>
+                            <TextField 
+                                name='search' 
+                                variant='outlined'
+                                label='Search your TimeCapsule'
+                                onKeyUp={handleKeyUp}
+                                fullWidth
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                            />
+                            <MuiChipsInput 
+                                style={{margin: '10px 0'}}
+                                value={tags}
+                                onAdd={handleAdd}
+                                onDelete={handleDelete}
+                                label='Search Tags'
+                                variant='outlined'
+                            />
+                            <Button onClick={searchPost} className={classes.searchButton} variant='contained' color="primary">Search</Button>
+                        </AppBar> */}
+
+                        <Form currentId={currentId} setcurrentId={setcurrentId}/>
+                        {(!searchQuery && !tags.length) && (
+                            <Paper elevation={6} className={classes.pagination}>
+                                <PaginationComponent page={page}/>
+                            </Paper>
+                        )}
+                    </Grid2>
+                </Grid2>
+            </Container>
+        </Grow>
     )
 }
 

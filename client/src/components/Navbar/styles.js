@@ -21,7 +21,8 @@ export default makeStyles((theme) => ({
   toolbar: {
     display: 'flex',
     justifyContent: 'flex-end',
-    width: '400px',
+    // width: '500px',
+    // gap: '20px',
   },
   profile: {
     display: 'flex',
@@ -40,4 +41,11 @@ export default makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
   },
+  // promptContainer: {
+  //   padding: '10px',
+  //   width: '300px',
+  //   backgroundColor: 'white',
+  //   borderRadius: '4px',
+  //   boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+  // },
 }));
