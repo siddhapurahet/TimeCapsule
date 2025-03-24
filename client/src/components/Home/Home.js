@@ -52,7 +52,7 @@ const Home = () => {
     return (
         <Grow in>
             <Container maxWidth="xl">
-                <Aibot />
+                {/* <Aibot /> */}
                 <Grid2 container justifyContent="space-between" alignItems="stretch" spacing={3} className={classes.gridContainer}>
                     <Grid2 item xs={12} sm={6} md={9}>
                         <Posts setcurrentId={setcurrentId}/>

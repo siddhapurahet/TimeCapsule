@@ -9,9 +9,7 @@ export default makeStyles((theme) => ({
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
   },
   aibotContainer: {
-    position: 'fixed',
-    right: '100px',
-    top: '50px',
+    position: 'relative',
     zIndex: 1000,
   },
   iconButton: {

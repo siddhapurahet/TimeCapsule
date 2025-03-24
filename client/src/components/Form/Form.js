@@ -4,6 +4,7 @@ import { TextField, Button, Typography, Paper } from "@mui/material";
 import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../actions/posts";
+import Aibot from '../AIBot/Aibot';
 
 const Form = ({currentId, setcurrentId}) => {
     const [postData, setpostData] = useState({ title: '', message: '', tags: '', selectedFile: ''});
@@ -62,16 +63,27 @@ const Form = ({currentId, setcurrentId}) => {
                     value={postData.title} 
                     onChange={(e) => setpostData({...postData, title: e.target.value})} 
                 />
-                <TextField 
-                    name="message" 
-                    variant="outlined" 
-                    label="Message" 
-                    fullWidth 
-                    multiline 
-                    rows={4}
-                    value={postData.message} 
-                    onChange={(e) => setpostData({...postData, message: e.target.value})} 
-                />
+                <div style={{ position: 'relative', width: '100%' }}>
+                    <TextField 
+                        name="message" 
+                        variant="outlined" 
+                        label="Message" 
+                        fullWidth 
+                        multiline 
+                        rows={4}
+                        value={postData.message} 
+                        onChange={(e) => setpostData({...postData, message: e.target.value})} 
+                    />
+                    <div style={{ 
+                        position: 'absolute', 
+                        bottom: '8px', 
+                        right: '8px',
+                        zIndex: 1,
+                        backgroundColor: 'transparent'
+                    }}>
+                        <Aibot />
+                    </div>
+                </div>
                 <TextField 
                     name="tags" 
                     variant="outlined" 
