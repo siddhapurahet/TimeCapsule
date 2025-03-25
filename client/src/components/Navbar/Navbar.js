@@ -103,8 +103,6 @@ const Navbar = () => {
                 </Toolbar>
             </AppBar>
 
-            <Aibot />
-
         </span>
     )
 }

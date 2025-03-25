@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
-import Aibot from '../AIBot/Aibot';
 import { useDispatch } from 'react-redux';
 import { getPosts, getPostsBySearch } from '../../actions/posts';
 import { Container, Grow, Grid, Paper, AppBar, TextField, Button, Grid2 } from "@mui/material";

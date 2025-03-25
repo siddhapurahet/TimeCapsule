@@ -81,7 +81,10 @@ const Form = ({currentId, setcurrentId}) => {
                         zIndex: 1,
                         backgroundColor: 'transparent'
                     }}>
-                        <Aibot />
+                        <Aibot 
+                            message={postData.message}
+                            onMessageUpdate={(enhancedMessage) => setpostData({...postData, message: enhancedMessage})}
+                        />
                     </div>
                 </div>
                 <TextField 
