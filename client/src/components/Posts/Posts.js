@@ -1,17 +1,53 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Post from "./Post/Post";
 import useStyles from './styles';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Grid, CircularProgress } from "@mui/material";
+import { getPosts } from "../../actions/posts";
+import ScrollToTop from '../ScrollToTop/ScrollToTop';
 
-const Posts = ({setcurrentId}) => {
-    const {posts, isLoading} = useSelector((state) => state.posts);
+const Posts = ({ setcurrentId }) => {
+    const { posts, isLoading, numberOfPages } = useSelector((state) => state.posts);
+    const [page, setPage] = useState(1);
+    const observer = useRef();
+    const lastPostRef = useRef();
+    const dispatch = useDispatch();
     const classes = useStyles();
-    
-    if(!posts?.length && !isLoading) return 'No posts';
+
+    useEffect(() => {
+        dispatch(getPosts(1));
+    }, [dispatch]);
+
+    useEffect(() => {
+        const options = {
+            root: null,
+            rootMargin: '20px',
+            threshold: 0.5
+        };
+
+        observer.current = new IntersectionObserver((entries) => {
+            const [target] = entries;
+            if (target.isIntersecting && page < numberOfPages && !isLoading) {
+                setPage((prevPage) => prevPage + 1);
+                dispatch(getPosts(page + 1));
+            }
+        }, options);
+
+        if (lastPostRef.current) {
+            observer.current.observe(lastPostRef.current);
+        }
+
+        return () => {
+            if (observer.current) {
+                observer.current.disconnect();
+            }
+        };
+    }, [dispatch, page, numberOfPages, isLoading]);
+
+    if (!posts?.length && !isLoading) return 'No posts';
 
     return (
-        !posts?.length ? <CircularProgress /> : (
+        <div style={{ width: '100%', position: 'relative' }}>
             <Grid 
                 className={classes.container} 
                 container 
@@ -27,7 +63,7 @@ const Posts = ({setcurrentId}) => {
                     }
                 }}
             >
-                {Array.isArray(posts) && posts.map((post) => (
+                {Array.isArray(posts) && posts.map((post, index) => (
                     <Grid 
                         key={post._id} 
                         item 
@@ -35,6 +71,7 @@ const Posts = ({setcurrentId}) => {
                         sm={6} 
                         md={4} 
                         lg={3}
+                        ref={index === posts.length - 1 ? lastPostRef : null}
                         sx={{
                             display: 'flex',
                             height: '100%'
@@ -44,8 +81,22 @@ const Posts = ({setcurrentId}) => {
                     </Grid>
                 ))}
             </Grid>
-        )
-    )
+            {isLoading && (
+                <div style={{ 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    padding: '20px',
+                    position: 'sticky',
+                    bottom: 0,
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    width: '100%'
+                }}>
+                    <CircularProgress />
+                </div>
+            )}
+            <ScrollToTop />
+        </div>
+    );
 };
 
 export default Posts;

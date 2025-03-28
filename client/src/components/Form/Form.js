@@ -43,11 +43,8 @@ const Form = ({currentId, setcurrentId}) => {
 
     if(!user?.result?.name) {
         return (
-            <Paper className={classes.paper}>
-                <Typography variant="h6" align="center">
-                    Please Sign In to create post.
-                </Typography>
-            </Paper>
+           
+            <div></div>
         )
     }
     

@@ -21,7 +21,7 @@ const posts = (state = {isLoading: true, posts: []}, action) => {
         case FETCH_ALL:
             return {
                 ...state,
-                posts: action.payload.data,
+                posts: action.payload.page === 1 ? action.payload.data : [...state.posts, ...action.payload.data],
                 currentPage: action.payload.currentPage,
                 numberOfPages: action.payload.numberOfPages,
             };
@@ -35,7 +35,7 @@ const posts = (state = {isLoading: true, posts: []}, action) => {
         case LIKE:
             return {...state, posts: state.posts.map((post) => post._id === action.payload._id ? action.payload : post)};
         case CREATE:
-            return {...state, posts: [...state.posts, action.payload] };
+            return {...state, posts: [action.payload, ...state.posts] };
         case DELETE:
             return {...state, posts: state.posts.filter((post) => post._id !== action.payload)};
         default:
