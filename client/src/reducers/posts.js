@@ -1,7 +1,7 @@
 import { current } from "@reduxjs/toolkit";
 import { FETCH_POST, FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, FETCH_BY_SEARCH, START_LOADING, END_LOADING } from "../constants/actionTypes";
 
-const posts = (state = {isLoading: true, posts: []}, action) => {
+const posts = (state = {isLoading: true, posts: [], post: null}, action) => {
     switch(action.type) {
         case START_LOADING:
             return {
@@ -17,6 +17,7 @@ const posts = (state = {isLoading: true, posts: []}, action) => {
             return {
                 ...state,
                 post: action.payload,
+                isLoading: false
             };
         case FETCH_ALL:
             return {

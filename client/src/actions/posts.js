@@ -3,14 +3,18 @@ import { FETCH_POST, FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, FETCH_BY_SEARCH, S
 
 export const getPost = (id) => async(dispatch) => {
     try {
+        console.log('Fetching post with ID:', id);
         dispatch({type: START_LOADING});
         const { data } = await api.fetchPost(id);
+        console.log('Received post data:', data);
         dispatch({ type: FETCH_POST, payload: data });
         dispatch({type: END_LOADING});
-        console.log(data);
-
+        return data;
     } catch (error) {
-        console.log(error.message);
+        console.error('Error fetching post:', error);
+        console.error('Error details:', error.response?.data || error.message);
+        dispatch({type: END_LOADING});
+        return null;
     }
 }
 
@@ -30,11 +34,13 @@ export const getPosts = (page) => async(dispatch) => {
 export const getPostsBySearch = (searchQuery) => async(dispatch) => {
     try {
         dispatch({type: START_LOADING});
-        const { data: {data} } = await api.fetchPostBySearch(searchQuery);
-        dispatch({type: FETCH_BY_SEARCH, payload: data});
+        const { data } = await api.fetchPostBySearch(searchQuery);
+        dispatch({type: FETCH_BY_SEARCH, payload: data?.data || []});
         dispatch({type: END_LOADING});
     } catch (error) {
-        console.log(error);
+        console.error('Error fetching posts by search:', error);
+        dispatch({type: FETCH_BY_SEARCH, payload: []});
+        dispatch({type: END_LOADING});
     }
 }
 

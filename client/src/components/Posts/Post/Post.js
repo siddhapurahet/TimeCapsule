@@ -51,11 +51,19 @@ const Post = ({post, setcurrentId}) => {
                 {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
                     <div className={classes.overlay2}>
                         <Button 
-                            style={{color: 'white'}} 
+                            style={{
+                                color: 'white',
+                                backgroundColor: '#1976d2',
+                                borderRadius: '50%',
+                                width: '40px',
+                                height: '40px',
+                                minWidth: '40px',
+                                padding: '0',
+                            }} 
                             size="small" 
                             onClick={handleSetCurrentId}
                         >
-                            <MoreHorizIcon fontSize="default" />
+                            <MoreHorizIcon title="Edit" fontSize="default" />
                         </Button>
                     </div>
                 )}

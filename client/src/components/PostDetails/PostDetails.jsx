@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Paper, Typography, CircularProgress, Divider } from "@mui/material";
+import { Paper, Typography, CircularProgress, Divider, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import moment from "moment";
@@ -14,14 +14,24 @@ const PostDetails = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getPost(id));
-  }, [id]);
+    console.log('PostDetails mounted with ID:', id);
+    const fetchPost = async () => {
+      const result = await dispatch(getPost(id));
+      console.log('Post fetch result:', result);
+    };
+    fetchPost();
+  }, [id, dispatch]);
 
   useEffect(() => {
-    dispatch(getPostsBySearch({ search: "none", tags: post?.tags.join(",") }));
-  }, [post]);
-
-  if (!post) return null;
+    if (post?.tags?.length > 0) {
+      console.log('Fetching related posts for tags:', post.tags);
+      const searchQuery = {
+        search: 'none',
+        tags: post.tags.join(',')
+      };
+      dispatch(getPostsBySearch(searchQuery));
+    }
+  }, [post?.tags, dispatch]);
 
   if (isLoading) {
     return (
@@ -31,11 +41,26 @@ const PostDetails = () => {
     );
   }
 
-  const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
+  if (!post) {
+    return (
+      <Paper elevation={6} className={classes.loadingPaper}>
+        <Typography variant="h6" gutterBottom>Post not found</Typography>
+        <Button 
+          variant="contained" 
+          color="primary" 
+          onClick={() => navigate.push('/')}
+        >
+          Return to Home
+        </Button>
+      </Paper>
+    );
+  }
+
+  const recommendedPosts = posts?.filter(({ _id }) => _id !== post._id) || [];
   const openPost = (_id) => navigate.push(`/posts/${_id}`);
 
   return (
-    <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
+    <Paper style={{ padding: "20px", borderRadius: "15px", margin: "20px" }} elevation={6}>
       <div className={classes.card}>
         <div className={classes.section}>
           <Typography variant="h3" component="h2">
@@ -79,7 +104,7 @@ const PostDetails = () => {
           />
         </div>
       </div>
-      {recommendedPosts.length && (
+      {recommendedPosts.length > 0 && (
         <div className={classes.section}>
           <Typography gutterBottom variant="h5">
             You might also like:
@@ -105,7 +130,11 @@ const PostDetails = () => {
                   <Typography gutterBottom variant="subtitle1">
                     Likes: {likes.length}
                   </Typography>
-                  <img src={selectedFile} width="200px" />
+                  <img
+                    src={selectedFile}
+                    width="200px"
+                    alt={title}
+                  />
                 </div>
               )
             )}

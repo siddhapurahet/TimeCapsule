@@ -11,11 +11,12 @@ const Home = () => {
     return (
         <Grow in>
             <Container maxWidth="xl">
-                <Grid2 container justifyContent="space-between" alignItems="stretch" spacing={3} className={classes.gridContainer}>
-                    <Grid2 item xs={12} sm={6} md={9}>
+                <Grid2 container direction="column" spacing={3} className={classes.gridContainer}>
+                    <Grid2 item xs={12}>
                         <Posts setcurrentId={setcurrentId}/>
                     </Grid2>
-                    <Grid2 item xs={12} sm={6} md={3}>
+
+                    <Grid2 item xs={12}>
                         <Form currentId={currentId} setcurrentId={setcurrentId}/>
                     </Grid2>
                 </Grid2>

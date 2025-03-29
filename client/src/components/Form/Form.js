@@ -43,15 +43,20 @@ const Form = ({currentId, setcurrentId}) => {
 
     if(!user?.result?.name) {
         return (
-           
-            <div></div>
+            <Paper className={classes.paper} elevation={6}>
+                <Typography variant="h6" align="center">
+                    Please Sign In to create post.
+                </Typography>
+            </Paper>
         )
     }
     
     return (
         <Paper className={classes.paper} elevation={6}>
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-                <Typography variant="h6">{currentId ? 'Correcting' : 'Crafting'} a Memory</Typography>
+                <Typography variant="h6" align="center" gutterBottom>
+                    {currentId ? 'Correcting' : 'Crafting'} a Memory
+                </Typography>
                 <TextField 
                     name="title" 
                     variant="outlined" 
