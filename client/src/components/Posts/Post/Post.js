@@ -89,14 +89,14 @@ const Post = ({post, setcurrentId}) => {
                     {post.message?.length > 150 && (
                         <Button 
                             size="small" 
+                            text
                             color="primary" 
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setIsExpanded(!isExpanded);
-                            }}
-                            sx={{ mt: 1 }}
+                            onClick={openPost}
+                            
+                            sx={{ mt: 2, ml: 12 }}
                         >
-                            {isExpanded ? 'Show Less' : 'Read More'}
+                            {/* {isExpanded ? 'Show Less' : 'Read More'} */}
+                            Read More
                         </Button>
                     )}
                 </CardContent>

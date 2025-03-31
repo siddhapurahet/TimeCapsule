@@ -82,16 +82,16 @@ const PostDetails = () => {
             {moment(post.createdAt).fromNow()}
           </Typography>
 
-          <Divider style={{ margin: "20px 0" }} />
-          <Typography variant="body1">
+          {/* <Divider style={{ margin: "20px 0" }} /> */}
+          {/* <Typography variant="body1">
             <strong>Realtime Chat - coming soon!</strong>
-          </Typography>
-          <Divider style={{ margin: "20px 0" }} />
-          <Typography variant="body1">
+          </Typography> */}
+          {/* <Divider style={{ margin: "20px 0" }} /> */}
+          {/* <Typography variant="body1">
             <strong>Realtime Chat - coming soon!</strong>
-          </Typography>
+          </Typography> */}
           {/* <CommentSection post={post} /> */}
-          <Divider style={{ margin: "20px 0" }} />
+          {/* <Divider style={{ margin: "20px 0" }} /> */}
         </div>
         <div className={classes.imageSection}>
           <img
@@ -131,8 +131,8 @@ const PostDetails = () => {
                     Likes: {likes.length}
                   </Typography>
                   <img
+                    className={classes.recommendedPostImage}
                     src={selectedFile}
-                    width="200px"
                     alt={title}
                   />
                 </div>
