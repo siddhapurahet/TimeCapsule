@@ -1,18 +1,26 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import useStyles from './styles';
-import { TextField, Button, Typography, Paper } from "@mui/material";
+import { TextField, Button, Typography, Paper, IconButton, Box } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../actions/posts";
 import Aibot from '../AIBot/Aibot';
 
 const Form = ({currentId, setcurrentId}) => {
-    const [postData, setpostData] = useState({ title: '', message: '', tags: '', selectedFile: ''});
+    const [postData, setpostData] = useState({ 
+        title: '', 
+        message: '', 
+        tags: '', 
+        selectedFiles: [] 
+    });
     const { posts } = useSelector((state) => state.posts);
     const post = currentId ? posts.find((p) => p._id === currentId) : null;
     const classes = useStyles();
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
         if(post) {
@@ -20,26 +28,53 @@ const Form = ({currentId, setcurrentId}) => {
                 title: post.title,
                 message: post.message,
                 tags: post.tags.join(','),
-                selectedFile: post.selectedFile
+                selectedFiles: post.selectedFiles || []
             });
         }
     }, [post]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(currentId) {
-            dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));    
-        } else {
-            dispatch(createPost({ ...postData, name: user?.result?.name }));
+        try {
+            const postDataWithFiles = {
+                ...postData,
+                name: user?.result?.name,
+                selectedFiles: postData.selectedFiles
+            };
+
+            if(currentId) {
+                await dispatch(updatePost(currentId, postDataWithFiles));
+                console.log('Updated Post Data:', postDataWithFiles);
+            } else {
+                await dispatch(createPost(postDataWithFiles));
+                console.log('Created Post Data:', postDataWithFiles);
+            }
+            clear();
+        } catch (error) {
+            console.error('Error submitting post:', error);
         }
-        clear();
     }
 
     const clear = () => {
         setcurrentId(null);
-        setpostData({ title: '', message: '', tags: '', selectedFile: ''});
+        setpostData({ title: '', message: '', tags: '', selectedFiles: [] });
     }
+
+    const handleFileUpload = ({ base64 }) => {
+        if (postData.selectedFiles.length < 5) {
+            setpostData({ ...postData, selectedFiles: [...postData.selectedFiles, base64] });
+        }
+    };
+
+    const handleRemoveFile = (index) => {
+        const newFiles = postData.selectedFiles.filter((_, i) => i !== index);
+        setpostData({ ...postData, selectedFiles: newFiles });
+    };
+
+    const handleAddFile = () => {
+        fileInputRef.current.click();
+    };
 
     if(!user?.result?.name) {
         return (
@@ -92,18 +127,85 @@ const Form = ({currentId, setcurrentId}) => {
                 <TextField 
                     name="tags" 
                     variant="outlined" 
-                    label="Tags (comma separated)" 
+                    label="Tags eg. Travelling,Paragliding,New journey etc" 
                     fullWidth 
                     value={postData.tags} 
                     onChange={(e) => setpostData({...postData, tags: e.target.value})} 
                 />
-                <div className={classes.fileInput}>
-                    <FileBase 
-                        type="file" 
-                        multiple={false} 
-                        onDone={({base64}) => setpostData({...postData, selectedFile: base64})} 
-                    />
-                </div>
+                <Box className={classes.fileInput}>
+                    <Typography variant="subtitle1" gutterBottom>
+                        Upload Images (Maximum - 5)
+                    </Typography>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+                        {postData.selectedFiles.map((file, index) => (
+                            <Box key={index} sx={{ position: 'relative' }}>
+                                <img 
+                                    src={file} 
+                                    alt={`Upload ${index + 1}`} 
+                                    style={{ 
+                                        width: '100px', 
+                                        height: '50px', 
+                                        objectFit: 'cover',
+                                        borderRadius: '4px',
+                                        border: '1px solid #ddd'
+                                    }} 
+                                />
+                                <IconButton
+                                    size="small"
+                                    onClick={() => handleRemoveFile(index)}
+                                    sx={{
+                                        position: 'absolute',
+                                        top: -8,
+                                        right: -8,
+                                        backgroundColor: 'white',
+                                        '&:hover': {
+                                            backgroundColor: 'white',
+                                        }
+                                    }}
+                                >
+                                    <DeleteIcon fontSize="small" />
+                                </IconButton>
+                            </Box>
+                        ))}
+                        {postData.selectedFiles.length < 5 && (
+                            <Box 
+                                sx={{ 
+                                    width: '100px', 
+                                    height: '50px', 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    justifyContent: 'center',
+                                    border: '2px dashed #ccc',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                    '&:hover': {
+                                        borderColor: '#666',
+                                        backgroundColor: '#f5f5f5'
+                                    }
+                                }}
+                                onClick={handleAddFile}
+                            >
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    style={{ display: 'none' }}
+                                    onChange={(e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            const reader = new FileReader();
+                                            reader.readAsDataURL(file);
+                                            reader.onloadend = () => {
+                                                handleFileUpload({ base64: reader.result });
+                                            };
+                                        }
+                                    }}
+                                />
+                                <AddIcon sx={{ fontSize: 40, color: '#666' }} />
+                            </Box>
+                        )}
+                    </Box>
+                </Box>
                 <Button 
                     className={classes.buttonSubmit} 
                     style={{ marginBottom: '10px' }} 
