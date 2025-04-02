@@ -37,8 +37,10 @@ const Form = ({currentId, setcurrentId}) => {
         e.preventDefault();
 
         try {
+            const tagsArray = postData.tags.split(',').map(tag => tag.trim()).filter(tag => tag);
             const postDataWithFiles = {
                 ...postData,
+                tags: tagsArray,
                 name: user?.result?.name,
                 selectedFiles: postData.selectedFiles
             };

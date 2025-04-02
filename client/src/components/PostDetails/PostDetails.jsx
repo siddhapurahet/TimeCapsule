@@ -5,6 +5,8 @@ import { useParams, useHistory } from "react-router-dom";
 import moment from "moment";
 import useStyles from "./styles";
 import { getPost, getPostsBySearch } from "../../actions/posts";
+import ArrowRightTwoToneIcon from '@mui/icons-material/ArrowRightTwoTone';
+import ArrowLeftTwoToneIcon from '@material-ui/icons/ArrowLeftTwoTone';
 
 const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -93,7 +95,9 @@ const PostDetails = () => {
           {/* <CommentSection post={post} /> */}
           {/* <Divider style={{ margin: "20px 0" }} /> */}
         </div>
+
         <div className={classes.imageSection}>
+        <div style={{ position: 'relative', width: '600px', height: '300px' }}>
           <img
             className={classes.media}
             src={
@@ -102,6 +106,35 @@ const PostDetails = () => {
             }
             alt={post.title}
           />
+          <ArrowLeftTwoToneIcon 
+              style={{
+                position: 'absolute',
+                left: '20px',  // Adjusted to align with the right edge
+                top: '50%',
+                transform: 'translateY(-50%)',
+                cursor: 'pointer',
+                backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                borderRadius: '50%',
+                padding: '5px',
+                zIndex: 1  // Ensures icon appears above the image
+              }}
+              onClick={() => console.log('Arrow clicked')}
+    />
+          <ArrowRightTwoToneIcon 
+              style={{
+                position: 'absolute',
+                right: '20px',  // Adjusted to align with the right edge
+                top: '50%',
+                transform: 'translateY(-50%)',
+                cursor: 'pointer',
+                backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                borderRadius: '50%',
+                padding: '5px',
+                zIndex: 1  // Ensures icon appears above the image
+              }}
+              onClick={() => console.log('Arrow clicked')}
+    />
+    </div>
         </div>
       </div>
       {recommendedPosts.length > 0 && (
