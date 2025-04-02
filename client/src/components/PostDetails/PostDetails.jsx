@@ -101,7 +101,7 @@ const PostDetails = () => {
           <img
             className={classes.media}
             src={
-              post.selectedFile ||
+              post.selectedFiles.length > 0 ? post.selectedFiles[0] :
               "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
             }
             alt={post.title}
@@ -137,7 +137,7 @@ const PostDetails = () => {
     </div>
         </div>
       </div>
-      {recommendedPosts.length > 0 && (
+      {/* {recommendedPosts.length > 0 && (
         <div className={classes.section}>
           <Typography gutterBottom variant="h5">
             You might also like:
@@ -173,7 +173,7 @@ const PostDetails = () => {
             )}
           </div>
         </div>
-      )}
+      )} */}
     </Paper>
   );
 };

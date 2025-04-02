@@ -28,7 +28,7 @@ const Form = ({currentId, setcurrentId}) => {
                 title: post.title,
                 message: post.message,
                 tags: post.tags.join(','),
-                selectedFiles: post.selectedFiles || []
+                selectedFiles: post.selectedFiles.length > 0 ? post.selectedFiles[0] : "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png",
             });
         }
     }, [post]);
