@@ -48,10 +48,11 @@ export const createPost = (post) => async(dispatch) => {
     try {
         dispatch({type: START_LOADING});
         const {data} = await api.createPost(post);
+        console.log("Response from createPost API:", data);
         dispatch({type: CREATE, payload: data});
         dispatch({type: END_LOADING});
     } catch (error) {
-        console.log(error);
+        console.error("Error in createPost action:", error);
     }
 }
 

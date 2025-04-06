@@ -42,14 +42,41 @@ export const getPostsBySearch = async(req, res) => {
     }
 }
 
+// export const createPost = async (req, res) => {
+//     const post = req.body;
+//     console.log("Received post data:", post); // Log the incoming data
+//     const newPost = new postMessage({ ...post, creator: req.userId, createdAt: new Date().toISOString() });
+//     console.log("Post object to save:", newPost); // Log the constructed object
+
+//     try {
+//         const savedPost = await newPost.save();
+//         console.log("Post saved successfully:", savedPost.toObject());
+//         res.status(200).json(savedPost);
+        
+
+//     } catch (error) {
+//         console.error("Error saving post:", error);
+//         res.status(409).json({message: error.message});
+//     }
+// };
+
 export const createPost = async (req, res) => {
     const post = req.body;
+    console.log("⭐ REQUEST BODY:", JSON.stringify(post));
+    console.log("⭐ SELECTED FILES EXISTS:", post.hasOwnProperty('selectedFiles'));
+    console.log("⭐ SELECTED FILES TYPE:", Array.isArray(post.selectedFiles) ? "ARRAY" : typeof post.selectedFiles);
+    
     const newPost = new postMessage({ ...post, creator: req.userId, createdAt: new Date().toISOString() });
+    console.log("⭐ NEW POST OBJECT:", JSON.stringify(newPost));
+    
     try {
-        await newPost.save();
-        res.status(200).json(newPost);
-
+        const savedPost = await newPost.save();
+        console.log("⭐ SAVED POST:", JSON.stringify(savedPost.toObject()));
+        console.log("⭐ SELECTED FILES IN SAVED:", savedPost.toObject().hasOwnProperty('selectedFiles'));
+        
+        res.status(200).json(savedPost);
     } catch (error) {
+        console.error("⭐ ERROR:", error);
         res.status(409).json({message: error.message});
     }
 };
@@ -62,10 +89,15 @@ export const updatePost = async(req, res) => {
         return res.status(404).send('No post with id found');
     }
     
-    const updatedPost = await postMessage.findByIdAndUpdate(_id, {...post, _id}, {new: true});
+    // const updatedPost = await postMessage.findByIdAndUpdate(_id, {...post, _id}, {new: true});
+    const updatedPost = await postMessage.findByIdAndUpdate(
+        _id, 
+        {...post, _id}, 
+        {new: true, runValidators: true}
+      );
 
-    res.json(updatedPost);
-    console.log("updated post is : ", updatedPost);
+      console.log("updated post is : ", updatedPost);
+      res.json(updatedPost);
 }
 
 export const deletePost = async(req, res) => {
@@ -101,3 +133,4 @@ export const likePost = async(req, res) => {
 
     res.status(200).json(updatedPost);
 }
+

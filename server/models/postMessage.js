@@ -6,7 +6,16 @@ const postSchema = mongoose.Schema({
     name: String,
     creator: String,
     tags: [String],
-    selectedFiles: [String],
+    selectedFiles: {
+        type: [String], // Explicitly define as array of strings
+        default: [],
+        validate: {
+            validator: function(v) {
+                return Array.isArray(v);
+            },
+            message: props => `${props.value} is not an array of strings!`
+        }
+    },
     likes: {
         type: [String],
         default: []
