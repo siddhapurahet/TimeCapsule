@@ -46,7 +46,7 @@ const PostDetails = () => {
     }
 };
 
-const showPreviousImage = () => {
+  const showPreviousImage = () => {
     if (Array.isArray(post.selectedFiles) && post.selectedFiles.length > 1) {
         setCurrentImageIndex((prevIndex) => 
             prevIndex === 0 ? post.selectedFiles.length - 1 : prevIndex - 1
@@ -121,7 +121,7 @@ const showPreviousImage = () => {
     className={classes.media}
     src={
         Array.isArray(post.selectedFiles) && post.selectedFiles.length > 0
-        ? post.selectedFiles[0]
+        ? post.selectedFiles[currentImageIndex] 
         : "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
     }
     alt={post.title}
