@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {  useEffect } from "react";
 import { Paper, Typography, CircularProgress, Divider, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
@@ -7,8 +7,11 @@ import useStyles from "./styles";
 import { getPost, getPostsBySearch } from "../../actions/posts";
 import ArrowRightTwoToneIcon from '@mui/icons-material/ArrowRightTwoTone';
 import ArrowLeftTwoToneIcon from '@material-ui/icons/ArrowLeftTwoTone';
+import { useState } from "react";
 
 const PostDetails = () => {
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { post, posts, isLoading } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const navigate = useHistory();
@@ -34,6 +37,22 @@ const PostDetails = () => {
       dispatch(getPostsBySearch(searchQuery));
     }
   }, [post?.tags, dispatch]);
+
+  const showNextImage = () => {
+    if (Array.isArray(post.selectedFiles) && post.selectedFiles.length > 1) {
+        setCurrentImageIndex((prevIndex) => 
+            prevIndex === post.selectedFiles.length - 1 ? 0 : prevIndex + 1
+        );
+    }
+};
+
+  const showPreviousImage = () => {
+    if (Array.isArray(post.selectedFiles) && post.selectedFiles.length > 1) {
+        setCurrentImageIndex((prevIndex) => 
+            prevIndex === 0 ? post.selectedFiles.length - 1 : prevIndex - 1
+        );
+    }
+};
 
   if (isLoading) {
     return (
@@ -98,14 +117,15 @@ const PostDetails = () => {
 
         <div className={classes.imageSection}>
         <div style={{ position: 'relative', width: '600px', height: '300px' }}>
-          <img
-            className={classes.media}
-            src={
-              post.selectedFile ||
-              "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
-            }
-            alt={post.title}
-          />
+        <img
+    className={classes.media}
+    src={
+        Array.isArray(post.selectedFiles) && post.selectedFiles.length > 0
+        ? post.selectedFiles[currentImageIndex] 
+        : "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
+    }
+    alt={post.title}
+/>
           <ArrowLeftTwoToneIcon 
               style={{
                 position: 'absolute',
@@ -118,7 +138,7 @@ const PostDetails = () => {
                 padding: '5px',
                 zIndex: 1  // Ensures icon appears above the image
               }}
-              onClick={() => console.log('Arrow clicked')}
+              onClick={showPreviousImage}
     />
           <ArrowRightTwoToneIcon 
               style={{
@@ -132,12 +152,12 @@ const PostDetails = () => {
                 padding: '5px',
                 zIndex: 1  // Ensures icon appears above the image
               }}
-              onClick={() => console.log('Arrow clicked')}
+              onClick={showNextImage}
     />
     </div>
         </div>
       </div>
-      {recommendedPosts.length > 0 && (
+      {/* {recommendedPosts.length > 0 && (
         <div className={classes.section}>
           <Typography gutterBottom variant="h5">
             You might also like:
@@ -173,7 +193,7 @@ const PostDetails = () => {
             )}
           </div>
         </div>
-      )}
+      )} */}
     </Paper>
   );
 };

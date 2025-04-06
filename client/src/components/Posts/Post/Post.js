@@ -43,7 +43,20 @@ const Post = ({post, setcurrentId}) => {
     return (
         <Card className={classes.card} raised elevation={6}>
             <div className={classes.clickableArea} onClick={openPost}>
-                <CardMedia className={classes.media} image={post.selectedFile} title={post.title}/>
+            <CardMedia 
+                className={classes.media} 
+                image={
+                    Array.isArray(post.selectedFiles) && post.selectedFiles.length > 0
+                    ? post.selectedFiles[0] 
+                    : "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
+                }
+                // image={
+                //     post.selectedFiles && post.selectedFiles.length > 0
+                //     ? post.selectedFiles[0] 
+                //     : "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
+                // } 
+  title={post.title}
+/>
                 <div className={classes.overlay}>
                     <Typography variant="h6">{post.name}</Typography>
                     <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
