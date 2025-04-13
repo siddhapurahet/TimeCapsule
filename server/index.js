@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import postRoutes from './routes/posts.js';
 import userRoutes from './routes/users.js';
 import dotenv from 'dotenv';
+import imageRoutes from './routes/images.js';
 
 const app =express();
 dotenv.config();
@@ -27,6 +28,10 @@ app.use(express.json());
 
 app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
+// In your main server file (index.js or app.js)
+
+app.use('/api/images', imageRoutes);
+
 app.get('/', (req, res) => {
     res.send("Welcome to TimeCapsule API'S");
 })
