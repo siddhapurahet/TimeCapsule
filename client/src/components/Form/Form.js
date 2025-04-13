@@ -7,6 +7,9 @@ import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../actions/posts";
 import Aibot from '../AIBot/Aibot';
+import { IKImage, IKUpload } from 'imagekitio-react';
+// import imagekit from '../../config/Imagekit';
+import uploadImagesToServer from '../../utils/UploadImagetoserver';
 
 const Form = ({currentId, setcurrentId}) => {
     const [postData, setpostData] = useState({ 
@@ -37,30 +40,78 @@ const Form = ({currentId, setcurrentId}) => {
         }
     }, [post]);
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     try {
+    //         const tagsArray = postData.tags.split(',').map(tag => tag.trim()).filter(tag => tag);
+    //         const postDataWithFiles = {
+    //             ...postData,
+    //             tags: tagsArray,
+    //             name: user?.result?.name,
+    //             selectedFiles: postData.selectedFiles
+    //         };
+
+    //         if(currentId) {
+    //             await dispatch(updatePost(currentId, postDataWithFiles));
+    //             console.log('Updated Post Data:', postDataWithFiles);
+    //         } else {
+    //             await dispatch(createPost(postDataWithFiles));
+    //             console.log('Created Post Data:', postDataWithFiles);
+    //         }
+    //         clear();
+    //     } catch (error) {
+    //         console.error('Error submitting post:', error);
+    //     }
+    // }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
             const tagsArray = postData.tags.split(',').map(tag => tag.trim()).filter(tag => tag);
-            const postDataWithFiles = {
+            
+            // Upload images to server, which then uploads to ImageKit
+            let imageUrls = [];
+            if (postData.selectedFiles) {
+                imageUrls = await uploadImagesToServer(postData.selectedFiles);
+            }
+            
+            const postDataWithFileUrls = {
                 ...postData,
                 tags: tagsArray,
                 name: user?.result?.name,
-                selectedFiles: postData.selectedFiles
+                selectedFiles: imageUrls // Store URLs instead of base64
             };
-
+    
             if(currentId) {
-                await dispatch(updatePost(currentId, postDataWithFiles));
-                console.log('Updated Post Data:', postDataWithFiles);
+                await dispatch(updatePost(currentId, postDataWithFileUrls));
+                console.log('Updated Post Data:', postDataWithFileUrls);
             } else {
-                await dispatch(createPost(postDataWithFiles));
-                console.log('Created Post Data:', postDataWithFiles);
+                await dispatch(createPost(postDataWithFileUrls));
+                console.log('Created Post Data:', postDataWithFileUrls);
             }
             clear();
         } catch (error) {
             console.error('Error submitting post:', error);
         }
     }
+    
+    // Helper function to upload a single image to ImageKit
+    // const uploadToImageKit = async (base64Data) => {
+    //     // Extract the base64 data without the prefix
+    //     const base64WithoutPrefix = base64Data.split(',')[1];
+        
+    //     // Generate a unique filename
+    //     const fileName = `post_image_${Date.now()}`;
+        
+    //     // Upload to ImageKit
+    //     return imagekit.upload({
+    //         file: base64WithoutPrefix, // Base64 data
+    //         fileName: fileName,
+    //         folder: "/posts" // Optional: Organize images in a folder
+    //     });
+    // }
 
     const clear = () => {
         setcurrentId(null);
