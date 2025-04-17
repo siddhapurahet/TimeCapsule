@@ -1,13 +1,10 @@
 import ImageKit from "imagekit";
 import multer from 'multer';
 import fs from 'fs';
+import dotenv from 'dotenv';
 
 
-console.log("ImageKit initialization values:", {
-  publicKey: process.env.IMAGEKIT_PUBLIC_KEY || "missing",
-  privateKeyPresent: process.env.IMAGEKIT_PRIVATE_KEY ? "yes" : "no",
-  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || "missing"
-});
+dotenv.config();
 
 // Configure ImageKit
 var imagekit = new ImageKit({
@@ -27,43 +24,27 @@ const upload = multer({
 // Middleware to handle file upload
 export const uploadMiddleware = upload.array('images', 5); // 'images' is the field name, 10 is max count
 
-// Controller to handle upload to ImageKit
-export const uploadImages = async (req, res) => {
-  try {
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ message: "No files uploaded" });
-    }
 
-    const uploadPromises = req.files.map(file => {
-      return imagekit.upload({
-        file: file.buffer.toString('base64'),
-        fileName: `${Date.now()}_${file.originalname}`,
-        folder: "/posts"
-      });
-    });
-
-    const uploadResults = await Promise.all(uploadPromises);
-    
-    // Return only the URLs
-    const imageUrls = uploadResults.map(result => result.url);
-    
-    res.status(200).json({ imageUrls });
-  } catch (error) {
-    console.error('ImageKit upload error:', error);
-    res.status(500).json({ message: "Error uploading images", error: error.message });
-  }
-};
-
-// For base64 uploads (alternative option)
+// For base64 uploads
 export const uploadBase64Images = async (req, res) => {
   try {
+    console.log("Received upload request", req.body ? "with body" : "without body");
+    
     const { images } = req.body;
     
     if (!images || !Array.isArray(images) || images.length === 0) {
-      return res.status(400).json({ message: "No images provided" });
+      console.log("Invalid images data received:", images);
+      return res.status(400).json({ message: "No images provided or invalid format" });
     }
-
+    
+    console.log("Processing", images.length, "images");
+    
     const uploadPromises = images.map((base64String, index) => {
+      // Check if it's already a valid base64 string
+      if (!base64String || typeof base64String !== 'string') {
+        throw new Error(`Invalid image data at index ${index}`);
+      }
+      
       // Extract base64 data without the prefix
       const base64Data = base64String.replace(/^data:image\/\w+;base64,/, '');
       
@@ -73,7 +54,7 @@ export const uploadBase64Images = async (req, res) => {
         folder: "/posts"
       });
     });
-
+    
     const uploadResults = await Promise.all(uploadPromises);
     const imageUrls = uploadResults.map(result => result.url);
     
@@ -82,4 +63,4 @@ export const uploadBase64Images = async (req, res) => {
     console.error('ImageKit upload error:', error);
     res.status(500).json({ message: "Error uploading images", error: error.message });
   }
-};
+};  

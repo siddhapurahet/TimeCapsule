@@ -9,7 +9,7 @@ import { createPost, updatePost } from "../../actions/posts";
 import Aibot from '../AIBot/Aibot';
 import { IKImage, IKUpload } from 'imagekitio-react';
 // import imagekit from '../../config/Imagekit';
-import uploadImagesToServer from '../../utils/UploadImagetoserver';
+import uploadImagesToServer from '../../utils/UploadImagetoserver';  
 
 const Form = ({currentId, setcurrentId}) => {
     const [postData, setpostData] = useState({ 
@@ -73,8 +73,30 @@ const Form = ({currentId, setcurrentId}) => {
             
             // Upload images to server, which then uploads to ImageKit
             let imageUrls = [];
-            if (postData.selectedFiles) {
-                imageUrls = await uploadImagesToServer(postData.selectedFiles);
+            // if (postData.selectedFiles && postData.selectedFiles.length > 0) {
+            //     try {
+            //         console.log('Uploading images to server...', postData.selectedFiles.length);
+            //         imageUrls = await uploadImagesToServer(postData.selectedFiles);
+            //         console.log('Images uploaded successfully:', imageUrls);
+            //     } catch (uploadError) {
+            //         console.error('Error uploading images:', uploadError);
+            //         throw new Error('Failed to upload images. Please try again.');
+            //     }
+            // }
+            if (postData.selectedFiles && postData.selectedFiles.length > 0) {
+                try {
+                    console.log('Files to upload:', postData.selectedFiles);
+                    console.log('Type of selectedFiles:', typeof postData.selectedFiles);
+                    if (Array.isArray(postData.selectedFiles)) {
+                        console.log('First item type:', typeof postData.selectedFiles[0]);
+                    }
+                    
+                    imageUrls = await uploadImagesToServer(postData.selectedFiles);
+                    console.log('Images uploaded successfully:', imageUrls);
+                } catch (uploadError) {
+                    console.error('Error uploading images:', uploadError);
+                    throw new Error('Failed to upload images. Please try again.');
+                }
             }
             
             const postDataWithFileUrls = {
@@ -85,15 +107,16 @@ const Form = ({currentId, setcurrentId}) => {
             };
     
             if(currentId) {
-                await dispatch(updatePost(currentId, postDataWithFileUrls));
-                console.log('Updated Post Data:', postDataWithFileUrls);
+                const updateResult = await dispatch(updatePost(currentId, postDataWithFileUrls));
+                console.log('Updated Post Data:', updateResult);
             } else {
-                await dispatch(createPost(postDataWithFileUrls));
-                console.log('Created Post Data:', postDataWithFileUrls);
+                const createResult = await dispatch(createPost(postDataWithFileUrls));
+                console.log('Created Post Data:', createResult);
             }
             clear();
         } catch (error) {
-            console.error('Error submitting post:', error);
+            console.log('Error submitting post:', error);
+            // You might want to show this error to the user in the UI
         }
     }
     

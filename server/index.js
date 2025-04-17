@@ -14,8 +14,8 @@ app.use((req, res, next) => {
   res.setHeader('Cross-Origin-Opener-Policy','same-origin-allow-popups');
   next();
 });
-app.use(bodyParser.json({ limit: "30mb", extended: true}));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
+app.use(bodyParser.json({ limit: "50mb", extended: true}));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true}));
 app.use(cors({
   origin: ['https://timecapsule-client.onrender.com', 'http://localhost:3000'], // Or specify allowed origins
   methods: ['GET', 'POST', 'OPTIONS', 'PATCH', 'DELETE'],
