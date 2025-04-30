@@ -1,5 +1,4 @@
 import { makeStyles } from '@mui/styles';
-import { deepPurple } from '@mui/material/colors';
 
 export default makeStyles((theme) => ({
   appBar: {
@@ -14,38 +13,37 @@ export default makeStyles((theme) => ({
   heading: {
     color: 'rgba(0,183,255, 1)',
     textDecoration: 'none',
+    fontSize: '2.5rem',
+    fontWeight: 'bold',
   },
   image: {
     marginLeft: '15px',
   },
   toolbar: {
     display: 'flex',
-    justifyContent: 'flex-end',
-    // width: '500px',
-    // gap: '20px',
+    justifyContent: 'space-between',
+    width: '100%',
   },
   profile: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '400px',
+    alignItems: 'center',
   },
   userName: {
     display: 'flex',
     alignItems: 'center',
+    textAlign: 'center',
   },
   brandContainer: {
     display: 'flex',
     alignItems: 'center',
   },
   purple: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
+    color: theme.palette.getContrastText(theme.palette.primary.main),
+    backgroundColor: theme.palette.primary.main,
   },
-  // promptContainer: {
-  //   padding: '10px',
-  //   width: '300px',
-  //   backgroundColor: 'white',
-  //   borderRadius: '4px',
-  //   boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-  // },
+  logout: {
+    marginLeft: '20px',
+  },
 }));
