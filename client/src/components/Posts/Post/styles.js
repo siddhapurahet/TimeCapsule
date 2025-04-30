@@ -1,10 +1,13 @@
 import { makeStyles } from '@mui/styles';
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: '56.25%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundBlendMode: 'darken',
+    borderTopLeftRadius: '15px',
+    borderTopRightRadius: '15px',
     objectFit: 'cover',
   },
   border: {
@@ -17,13 +20,17 @@ export default makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    borderRadius: '15px',
+    borderRadius: '15px !important',
     height: '100%',
     position: 'relative',
     width: '100%',
     maxWidth: '100%',
     overflow: 'hidden',
     minHeight: '450px',
+    '&:hover': {
+      transform: 'scale(1.02)',
+      transition: 'transform 0.3s ease-in-out',
+    },
   },
   overlay: {
     position: 'absolute',
@@ -72,11 +79,13 @@ export default makeStyles({
     display: '-webkit-box',
     WebkitLineClamp: 3,
     WebkitBoxOrient: 'vertical',
+    marginBottom: '8px',
   },
   cardActions: {
     padding: '0 16px 8px 16px',
     display: 'flex',
     justifyContent: 'space-between',
+    borderTop: '1px solid rgba(0, 0, 0, 0.1)',
     marginTop: 'auto',
   },
   clickableArea: {
@@ -89,4 +98,4 @@ export default makeStyles({
     flexDirection: 'column',
     height: '100%',
   },
-});
+}));

@@ -1,15 +1,20 @@
 import React from "react";
-import { Container } from "@mui/material";
+import { Container, dividerClasses } from "@mui/material";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Auth from "./components/Auth/Auth";
 import PostDetails from "./components/PostDetails/PostDetails";
+import Backgroundvideo from "./components/Background/Background.js";
+
 
 const App = () => {
     const user = JSON.parse(localStorage.getItem('profile'));
 
     return (
+    <div>
+        <Backgroundvideo />
+
         <BrowserRouter>
             <Container maxwidth="xl">
             <Navbar />
@@ -23,6 +28,7 @@ const App = () => {
 
             </Container>
         </BrowserRouter>
+    </div>
     )
 }
 
