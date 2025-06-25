@@ -16,7 +16,7 @@
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",
     "ajv": "^8.17.1",
-    "axios": "^1.7.8",
+    "axios": "^1.10.0",
     "gsap": "^3.12.7",
     "imagekitio-react": "^4.3.0",
     "jwt-decode": "^4.0.0",

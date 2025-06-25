@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useRef, useState } from "react";
 import Post from "./Post/Post";
 import useStyles from './styles';
@@ -5,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Grid, CircularProgress } from "@mui/material";
 import { getPosts } from "../../actions/posts";
 import ScrollToTop from '../ScrollToTop/ScrollToTop';
+import { Button } from "@mui/material";
 
 const Posts = ({ setcurrentId }) => {
     const { posts, isLoading, numberOfPages } = useSelector((state) => state.posts);
@@ -45,6 +47,15 @@ const Posts = ({ setcurrentId }) => {
     }, [dispatch, page, numberOfPages, isLoading]);
 
     if (!posts?.length && !isLoading) return 'No posts';
+
+    const handleCreateFlipbook = async () => {
+        try {
+          const response = await axios.post("http://localhost:10000/api/flipbook", { posts });
+          console.log("📘 Flipbook content:", response.data);
+        } catch (error) {
+          console.error("Error generating flipbook:", error);
+        }
+      };
 
     return (
         <div style={{ width: '100%', position: 'relative' }}>
@@ -95,6 +106,9 @@ const Posts = ({ setcurrentId }) => {
                 </div>
             )}
             <ScrollToTop />
+            <Button variant="contained" color="primary" onClick={handleCreateFlipbook}>
+                Create Flipbook
+            </Button>
         </div>
     );
 };
