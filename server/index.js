@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 import imageRoutes from './routes/images.js';
 
 const app =express();
-dotenv.config();
+dotenv.config({ path: '../.env' });
 
 app.use((req, res, next) => {
   res.setHeader('Cross-Origin-Opener-Policy','same-origin-allow-popups');
@@ -26,6 +26,12 @@ app.use(cors({
 
 app.use(express.json());
 
+// Debug middleware to log all requests
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+    next();
+});
+
 app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
 // In your main server file (index.js or app.js)
@@ -36,7 +42,12 @@ app.get('/', (req, res) => {
     res.send("Welcome to TimeCapsule API'S");
 })
 
-const PORT = process.env.PORT || 5000;
+// Test endpoint for debugging
+app.get('/test', (req, res) => {
+    res.json({ message: 'Server is running!', timestamp: new Date() });
+})
+
+const PORT = process.env.PORT || 10000;
 
 mongoose.connect(process.env.CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))

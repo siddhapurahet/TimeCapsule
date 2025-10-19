@@ -17,4 +17,23 @@ export default makeStyles((theme) => ({
       flexDirection: 'column-reverse',
     },
   },
+  mainContainer: {
+    display: 'flex',
+    gap: theme.spacing(2),
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+    },
+  },
+  sidebar: {
+    width: '280px',
+    flexShrink: 0,
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      order: 2,
+    },
+  },
+  content: {
+    flex: 1,
+    minWidth: 0, // Prevents flex item from overflowing
+  },
 }));
