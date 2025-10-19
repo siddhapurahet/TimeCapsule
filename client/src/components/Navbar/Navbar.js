@@ -6,6 +6,7 @@ import {Link, useHistory, useLocation} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { LOGOUT } from '../../constants/actionTypes';
 import { jwtDecode } from 'jwt-decode';
+import { logout as logoutAPI } from '../../api/index';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import Aibot from '../AIBot/Aibot';
 import * as THREE from 'three';
@@ -32,10 +33,20 @@ const Navbar = () => {
         setUser(profile);
     }, [location]); // Runs once on component mount
 
-    const logOut = () => {
-        dispatch({type: LOGOUT});
-        navigate.push('/');
-        setUser(null);
+    const logOut = async () => {
+        try {
+            // Call logout API to deactivate user session
+            if (user && user.result) {
+                await logoutAPI(user.result._id || user.result.id);
+            }
+        } catch (error) {
+            console.error('Error during logout:', error);
+        } finally {
+            // Always perform local logout regardless of API call success
+            dispatch({type: LOGOUT});
+            navigate.push('/');
+            setUser(null);
+        }
     }
 
    
