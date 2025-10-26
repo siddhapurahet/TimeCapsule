@@ -25,7 +25,7 @@ export default makeStyles((theme) => ({
     },
   },
   sidebar: {
-    width: '280px',
+    width: '200px',
     flexShrink: 0,
     [theme.breakpoints.down('md')]: {
       width: '100%',

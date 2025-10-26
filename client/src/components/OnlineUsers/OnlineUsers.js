@@ -97,10 +97,10 @@ const OnlineUsers = () => {
                   className={classes.avatar}
                   sx={{ 
                     bgcolor: green[500],
-                    width: 12, 
-                    height: 12,
-                    border: '2px solid white',
-                    boxShadow: '0 0 0 2px #4caf50'
+                    width: 10, 
+                    height: 10,
+                    border: '1px solid white',
+                    boxShadow: '0 0 0 1px #4caf50'
                   }}
                 />
               </ListItemIcon>
