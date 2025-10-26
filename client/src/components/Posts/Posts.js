@@ -52,11 +52,11 @@ const Posts = ({ setcurrentId }) => {
                 className={classes.container} 
                 container 
                 alignItems="stretch" 
-                spacing={3}
+                spacing={4}
                 sx={{ 
                     width: '100%',
                     margin: '0 auto',
-                    padding: '20px',
+                    padding: '24px',
                     '& > *': {
                         display: 'flex',
                         height: '100%'
@@ -69,8 +69,7 @@ const Posts = ({ setcurrentId }) => {
                         item 
                         xs={12} 
                         sm={6} 
-                        md={4} 
-                        lg={3}
+                        md={4}
                         ref={index === posts.length - 1 ? lastPostRef : null}
                         sx={{
                             display: 'flex',

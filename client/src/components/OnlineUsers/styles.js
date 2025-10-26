@@ -2,10 +2,11 @@ import { makeStyles } from '@mui/styles';
 
 export default makeStyles((theme) => ({
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     marginBottom: theme.spacing(2),
     maxHeight: '400px',
     overflow: 'hidden',
+    width: '200px',
   },
   header: {
     display: 'flex',
@@ -28,18 +29,23 @@ export default makeStyles((theme) => ({
     padding: 0,
   },
   userItem: {
-    padding: theme.spacing(0.5, 0),
+    padding: theme.spacing(0.25, 0),
+    minHeight: 'auto',
     '&:hover': {
       backgroundColor: theme.palette.action.hover,
       borderRadius: theme.spacing(0.5),
     },
   },
   avatar: {
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(0.5),
   },
   userName: {
     fontWeight: 500,
-    fontSize: '0.875rem',
+    fontSize: '0.8rem',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '140px',
   },
   noUsers: {
     textAlign: 'center',
