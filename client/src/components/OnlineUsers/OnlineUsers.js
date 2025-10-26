@@ -20,14 +20,20 @@ import {
 const OnlineUsers = () => {
   const classes = useStyles();
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
+    // Get current user ID from localStorage
+    const currentUser = JSON.parse(localStorage.getItem('profile'));
+    if (currentUser && currentUser.result) {
+      setCurrentUserId(currentUser.result._id || currentUser.result.id);
+    }
+
     const fetchOnlineUsers = async () => {
       try {
         console.log('Fetching online users...');
         
         // Update current user's activity
-        const currentUser = JSON.parse(localStorage.getItem('profile'));
         console.log('Current user:', currentUser);
         
         if (currentUser && currentUser.result) {
@@ -101,7 +107,7 @@ const OnlineUsers = () => {
               <ListItemText 
                 primary={
                   <Typography variant="body2" className={classes.userName}>
-                    {user.name || 'Unknown User'}
+                    {user.id === currentUserId ? 'You' : (user.name || 'Unknown User')}
                   </Typography>
                 }
                 secondary={
