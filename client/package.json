@@ -13,6 +13,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "next": "^14.0.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@material-ui/icons": "^4.11.3",
