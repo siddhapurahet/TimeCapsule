@@ -30,12 +30,12 @@ const OnlineUsers = () => {
     }
 
     const fetchOnlineUsers = async () => {
+    
       try {
         console.log('Fetching online users...');
         
         // Update current user's activity
-        console.log('Current user:', currentUser);
-        
+        console.log('Current user:', currentUser);        
         if (currentUser && currentUser.result) {
           console.log('Updating user activity for:', currentUser.result._id || currentUser.result.id);
           await updateUserActivityAPI(currentUser.result._id || currentUser.result.id);
