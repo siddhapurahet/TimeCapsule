@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:10000' });
-// const API = axios.create({ baseURL: 'https://timecapsule-server.onrender.com' })
-// const url = 'https://timecapsule-server.onrender.com/posts';
+// const API = axios.create({ baseURL: 'http://localhost:10000' });
+const API = axios.create({ baseURL: 'https://timecapsule-server.onrender.com' })
 
 API.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')) {
