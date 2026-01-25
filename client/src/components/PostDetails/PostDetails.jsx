@@ -92,6 +92,7 @@ const PostDetails = () => {
             variant="h6"
             color="textSecondary"
             component="h2"
+            marginTop={1}
           >
             {post.tags.map((tag) => `#${tag} `)}
           </Typography>

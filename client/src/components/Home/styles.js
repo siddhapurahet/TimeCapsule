@@ -27,6 +27,8 @@ export default makeStyles((theme) => ({
   sidebar: {
     width: '200px',
     flexShrink: 0,
+    // Push the OnlineUsers card down so it aligns with the posts column visually
+    marginTop: theme.spacing(6),
     [theme.breakpoints.down('md')]: {
       width: '100%',
       order: 2,

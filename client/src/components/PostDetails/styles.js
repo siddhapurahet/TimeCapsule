@@ -25,6 +25,22 @@ export default makeStyles((theme) => ({
     margin: '10px',
     flex: 1,
   },
+  messageBox: {
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
+    borderRadius: theme.spacing(1.5),
+    border: `1px solid ${theme.palette.divider}`,
+    backgroundColor: theme.palette.background.paper,
+    // Keep equal space on left/right and make long text wrap nicely
+    maxWidth: '700px',
+    width: '100%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  messageText: {
+    whiteSpace: 'pre-wrap',
+    wordBreak: 'break-word',
+  },
   imageSection: {
     marginLeft: '20px',
     [theme.breakpoints.down('sm')]: {

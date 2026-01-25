@@ -2,13 +2,13 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "description": "Tiimecapsule project client",
   "license": "ISC",
   "author": "",
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm run build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
