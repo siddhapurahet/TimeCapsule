@@ -11,16 +11,23 @@ import {
   Chip
 } from '@mui/material';
 import { green } from '@mui/material/colors';
+import { useHistory } from 'react-router-dom';
 import useStyles from './styles';
 import { 
   getOnlineUsers as getOnlineUsersFromAPI,
   updateUserActivity as updateUserActivityAPI
 } from '../../api/index';
+import { getPostsBySearch } from '../../actions/posts';
+import { useDispatch, useSelector } from 'react-redux';
+import * as api from '../../api';
 
 const OnlineUsers = () => {
   const classes = useStyles();
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const navigate = useHistory();
+  const dispatch = useDispatch();
+  const { posts } = useSelector((state) => state.posts);
 
   useEffect(() => {
     // Get current user ID from localStorage
@@ -74,6 +81,52 @@ const OnlineUsers = () => {
     };
   }, []);
 
+  const handleChat = async (userId, userName) => {
+    try {
+      console.log('Chat with user:', userId, userName);
+      
+      // Search for posts by this user
+      const searchQuery = {
+        search: userName, // Search by user name
+        tags: 'none'
+      };
+      
+      // Dispatch search and wait a bit for Redux to update
+      await dispatch(getPostsBySearch(searchQuery));
+      
+      // Use a small timeout to allow Redux state to update
+      setTimeout(() => {
+        // Get posts from Redux store (they should be updated by now)
+        const userPosts = posts || [];
+        
+        // Find the most recent post by this user
+        const userPost = userPosts.find(p => p.name === userName || p.creator === userId);
+        
+        if (userPost && userPost._id) {
+          // Navigate to the user's post with chat mode enabled
+          navigate.push(`/posts/${userPost._id}?chat=true&userId=${userId}`);
+        } else {
+          // Try direct API call as fallback
+          api.fetchPostBySearch(searchQuery).then((response) => {
+            const apiPosts = response.data?.data || [];
+            const foundPost = apiPosts.find(p => p.name === userName || p.creator === userId);
+            
+            if (foundPost && foundPost._id) {
+              navigate.push(`/posts/${foundPost._id}?chat=true&userId=${userId}`);
+            } else {
+              alert(`No posts found for ${userName}. They may need to create a post first.`);
+            }
+          }).catch(() => {
+            alert(`No posts found for ${userName}. They may need to create a post first.`);
+          });
+        }
+      }, 100);
+    } catch (error) {
+      console.error('Error finding user post:', error);
+      alert('Error finding user post. Please try again.');
+    }
+  };
+
   return (
     <Paper className={classes.paper} elevation={3}>
       <Box className={classes.header}>
@@ -105,6 +158,7 @@ const OnlineUsers = () => {
                 />
               </ListItemIcon>
               <ListItemText 
+                className={classes.listItemText}
                 primary={
                   <Typography variant="body2" className={classes.userName}>
                     {user.id === currentUserId ? 'You' : (user.name || 'Unknown User')}
@@ -116,6 +170,16 @@ const OnlineUsers = () => {
                   </Typography>
                 }
               />
+              {currentUserId && user.id !== currentUserId && (
+                <Chip 
+                  label="Chat" 
+                  color="success" 
+                  size="small"
+                  className={classes.chatChip}
+                  onClick={() => handleChat(user.id, user.name || 'Unknown User')}
+                  clickable
+                />
+              )}
             </ListItem>
           ))
         ) : (

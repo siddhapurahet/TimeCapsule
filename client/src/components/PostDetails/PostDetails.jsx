@@ -1,13 +1,14 @@
 import React, {  useEffect } from "react";
 import { Paper, Typography, CircularProgress, Divider, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import moment from "moment";
 import useStyles from "./styles";
 import { getPost, getPostsBySearch } from "../../actions/posts";
 import ArrowRightTwoToneIcon from '@mui/icons-material/ArrowRightTwoTone';
 import ArrowLeftTwoToneIcon from '@material-ui/icons/ArrowLeftTwoTone';
 import { useState } from "react";
+import ChatBox from "../ChatBox/ChatBox";
 
 const PostDetails = () => {
 
@@ -15,8 +16,19 @@ const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const navigate = useHistory();
+  const location = useLocation();
   const classes = useStyles();
   const { id } = useParams();
+  
+  // Get query parameters for chat mode
+  const queryParams = new URLSearchParams(location.search);
+  const isChatMode = queryParams.get('chat') === 'true';
+  const chatUserId = queryParams.get('userId');
+  
+  // Get current user info
+  const currentUser = JSON.parse(localStorage.getItem('profile'));
+  const currentUserId = currentUser?.result?._id || currentUser?.result?.id || currentUser?.result?.googleId;
+  const currentUserName = currentUser?.result?.name || 'You';
 
   useEffect(() => {
     console.log('PostDetails mounted with ID:', id);
@@ -158,6 +170,18 @@ const PostDetails = () => {
     </div>
         </div>
       </div>
+      
+      {/* ChatBox - shown when in chat mode */}
+      {isChatMode && chatUserId && post && (
+        <ChatBox
+          postId={post._id}
+          otherUserId={chatUserId}
+          otherUserName={post.name}
+          currentUserId={currentUserId}
+          currentUserName={currentUserName}
+        />
+      )}
+      
       {/* {recommendedPosts.length > 0 && (
         <div className={classes.section}>
           <Typography gutterBottom variant="h5">

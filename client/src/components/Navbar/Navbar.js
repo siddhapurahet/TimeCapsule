@@ -65,7 +65,7 @@ const Navbar = () => {
                             flexGrow: 1
                         }}
                     >
-                        TimeCapsule
+                        TimeCapsule...
                     </Typography>
                 </Box>
                 
